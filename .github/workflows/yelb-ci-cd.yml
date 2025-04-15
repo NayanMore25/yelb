@@ -8,37 +8,35 @@ on:
   workflow_dispatch:
  
 jobs:
-  build:
+  build_ui:
     runs-on: self-hosted
  
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
  
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3.1.0
- 
-      - name: Hadolint Action
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: yelb-ui/Dockerfile
+      # - name: Hadolint Action
+      #   uses: hadolint/hadolint-action@v3.1.0
+      #   with:
+      #     dockerfile: yelb-ui/Dockerfile
  
       - name: Build Docker Image
         run: |
-          docker build -t yelb-ui:latest ./yelb-ui | tee /tmp/build-logs.txt
+          docker build -t yelb-ui:latest yelb-ui > /tmp/build-log.txt 2>&1
+          
+          
+      # - name: Docker Scout Scan
+      #   uses: docker/scout-action@v1
+      #   with:
+      #     image: yelb-ui:latest
  
-      - name: Docker Scout Scan
-        uses: docker/scout-action@v1
-        with:
-          image: yelb-ui:latest
+      # - name: Login to Private Registry
+      #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
  
-      - name: Login to Private Registry
-        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
- 
-      - name: Tag and Push to Registry
-        run: |
-          docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
-          docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
+      # - name: Tag and Push to Registry
+      #   run: |
+      #     docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
+      #     docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
  
       - name: Upload Build Logs
         uses: actions/upload-artifact@v4
@@ -46,24 +44,93 @@ jobs:
           name: build-logs
           path: /tmp/build-logs.txt
  
-      - name: Deploy to Staging
+      # - name: Deploy to Staging
+      #   run: |
+      #     echo "Deploying to staging..."
+      #     # Example: kubectl apply -f staging/deployment.yaml
+ 
+      # - name: Run Tests in Staging
+      #   run: echo "Tests passed in staging"
+ 
+      # - name: Deploy to Production
+      #   if: success()
+      #   run: |
+      #     echo "Deploying to production..."
+      #     # Example: kubectl apply -f prod/deployment.yaml
+ 
+      # - name: Slack Notification
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     fields: repo,commit,author
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  build_appserver:
+    runs-on: self-hosted
+ 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      # - name: Hadolint Action
+      #   uses: hadolint/hadolint-action@v3.1.0
+      #   with:
+      #     dockerfile: yelb-ui/Dockerfile
+ 
+      - name: Build Docker Image
         run: |
-          echo "Deploying to staging..."
-          # Example: kubectl apply -f staging/deployment.yaml
+          docker build -t yelb-appserver:latest yelb-appserver > /tmp/build-log-appserver.txt 2>&1
+          
+          
+      # - name: Docker Scout Scan
+      #   uses: docker/scout-action@v1
+      #   with:
+      #     image: yelb-ui:latest
  
-      - name: Run Tests in Staging
-        run: echo "Tests passed in staging"
+      # - name: Login to Private Registry
+      #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
  
-      - name: Deploy to Production
-        if: success()
-        run: |
-          echo "Deploying to production..."
-          # Example: kubectl apply -f prod/deployment.yaml
+      # - name: Tag and Push to Registry
+      #   run: |
+      #     docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
+      #     docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
  
-      - name: Slack Notification
-        uses: 8398a7/action-slack@v3
+      - name: Upload Build Logs
+        uses: actions/upload-artifact@v4
         with:
-          status: ${{ job.status }}
-          fields: repo,commit,author
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          name: build-logs
+          path: /tmp/build-logs-appserver.txt
+
+
+  build_db:
+    runs-on: self-hosted
+ 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      # - name: Hadolint Action
+      #   uses: hadolint/hadolint-action@v3.1.0
+      #   with:
+      #     dockerfile: yelb-ui/Dockerfile
+ 
+      - name: Build Docker Image
+        run: |
+          docker build -t yelb-appserver:latest yelb-appserver > /tmp/build-log-appserver.txt 2>&1
+          
+          
+      # - name: Docker Scout Scan
+      #   uses: docker/scout-action@v1
+      #   with:
+      #     image: yelb-ui:latest
+ 
+      # - name: Login to Private Registry
+      #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+ 
+      # - name: Tag and Push to Registry
+      #   run: |
+      #     docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
+      #     docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
+ 
+      - name: Upload Build Logs
+        uses: actions/upload-artifact@v4    
