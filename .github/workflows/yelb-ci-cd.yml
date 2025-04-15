@@ -116,7 +116,7 @@ jobs:
  
       - name: Build Docker Image
         run: |
-          docker build -t yelb-appserver:latest yelb-appserver > /tmp/build-log-appserver.txt 2>&1
+          docker build -t yelb-db:latest yelb-db > /tmp/build-log-db.txt 2>&1
           
           
       # - name: Docker Scout Scan
@@ -133,4 +133,7 @@ jobs:
       #     docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
  
       - name: Upload Build Logs
-        uses: actions/upload-artifact@v4    
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: /tmp/build-logs-db.txt
