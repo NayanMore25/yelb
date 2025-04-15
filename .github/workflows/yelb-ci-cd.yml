@@ -22,7 +22,7 @@ jobs:
  
       - name: Build Docker Image
         run: |
-          docker build -t yelb-ui:latest yelb-ui > /tmp/build-log.txt 2>&1
+          docker build -t yelb-ui:latest yelb-ui > /tmp/build-log.txt
           
           
       # - name: Docker Scout Scan
@@ -79,7 +79,7 @@ jobs:
  
       - name: Build Docker Image
         run: |
-          docker build -t yelb-appserver:latest yelb-appserver > /tmp/build-log-appserver.txt 2>&1
+          docker build -t yelb-appserver:latest yelb-appserver > /tmp/build-log-appserver.txt
           
           
       # - name: Docker Scout Scan
@@ -116,7 +116,7 @@ jobs:
  
       - name: Build Docker Image
         run: |
-          docker build -t yelb-db:latest yelb-db > /tmp/build-log-db.txt 2>&1
+          docker build -t yelb-db:latest yelb-db > /tmp/build-log-db.txt
           
           
       # - name: Docker Scout Scan
