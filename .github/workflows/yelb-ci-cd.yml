@@ -9,7 +9,7 @@ on:
  
 jobs:
   build:
-    runs-on:runner1 
+    runs-on: self-hosted
  
     steps:
       - name: Checkout code
