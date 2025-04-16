@@ -52,9 +52,11 @@ jobs:
       #     name: build-logs
       #     path: /tmp/build-logs.txt
  
-      # - name: Deploy to Staging
-      #   run: |
-      #     echo "Deploying to staging..."
+      - name: Deploy to Staging
+        run: |
+           echo "Deploying to staging..."
+           docker run -d --name yelb-ui -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/yelb-ui:staging
+           
       #     # Example: kubectl apply -f staging/deployment.yaml
  
       # - name: Run Tests in Staging
