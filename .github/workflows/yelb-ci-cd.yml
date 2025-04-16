@@ -42,10 +42,10 @@ jobs:
       # - name: Login to Private Registry
       #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
  
-      # - name: Tag and Push to Registry
-      #   run: |
-      #     docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
-      #     docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
+      - name: Tag and Push to Registry
+        run: |
+           docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
+           docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
  
       # - name: Upload Build Logs
       #   uses: actions/upload-artifact@v4
