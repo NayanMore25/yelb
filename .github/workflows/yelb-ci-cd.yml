@@ -26,10 +26,10 @@ jobs:
           docker build -t yelb-ui:latest yelb-ui 
           
           
-      # - name: Docker Scout Scan
-      #   uses: docker/scout-action@v1
-      #   with:
-      #     image: yelb-ui:latest
+      - name: Docker Scout Scan
+        uses: docker/scout-action@v1
+        with:
+           image: yelb-ui:latest
  
       # - name: Login to Private Registry
       #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
