@@ -32,9 +32,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           
       - name: Docker Scout Scan
-        uses: docker/scout-action@v1
-        with:
-         image: yelb-ui:latest
+        #uses: docker/scout-action@v1
+        #with:
+         #image: yelb-ui:latest
+        run: |
+          docker scout quickview yelb-ui:latest
         
  
       # - name: Login to Private Registry
