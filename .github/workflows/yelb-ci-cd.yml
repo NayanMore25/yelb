@@ -93,10 +93,10 @@ jobs:
           docker build -t yelb-appserver:latest yelb-appserver 
           
           
-      # - name: Docker Scout Scan
-      #   uses: docker/scout-action@v1
-      #   with:
-      #     image: yelb-ui:latest
+      - name: Docker Scout Scan
+        uses: docker/scout-action@v1
+        with:
+           image: yelb-appserver:latest
  
       # - name: Login to Private Registry
       #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
@@ -131,10 +131,10 @@ jobs:
           docker build -t yelb-db:latest yelb-db
           
           
-      # - name: Docker Scout Scan
-      #   uses: docker/scout-action@v1
-      #   with:
-      #     image: yelb-ui:latest
+      - name: Docker Scout Scan
+        uses: docker/scout-action@v1
+        with:
+          image: yelb-db:latest
  
       # - name: Login to Private Registry
       #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
