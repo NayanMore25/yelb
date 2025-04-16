@@ -100,9 +100,8 @@ jobs:
 
           
       - name: Docker Scout Scan
-        uses: docker/scout-action@v1
-        with:
-           image: yelb-appserver:latest
+        run: |
+          docker scout quickview yelb-appserver:latest
  
       # - name: Login to Private Registry
       #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
@@ -144,9 +143,8 @@ jobs:
 
           
       - name: Docker Scout Scan
-        uses: docker/scout-action@v1
-        with:
-          image: yelb-db:latest
+        run: |
+          docker scout quickview yelb-db:latest
  
       # - name: Login to Private Registry
       #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
