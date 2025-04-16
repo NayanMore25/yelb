@@ -39,9 +39,6 @@ jobs:
           docker scout quickview yelb-ui:latest
         
  
-      # - name: Login to Private Registry
-      #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
- 
       - name: Tag and Push to Registry
         run: |
            docker tag yelb-ui:latest ${{ secrets.DOCKER_USERNAME }}/yelb-ui:latest
@@ -105,14 +102,11 @@ jobs:
         run: |
           docker scout quickview yelb-appserver:latest
  
-      # - name: Login to Private Registry
-      #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
- 
-      # - name: Tag and Push to Registry
-      #   run: |
-      #     docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
-      #     docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
- 
+      
+      - name: Tag and Push to Registry
+        run: |
+           docker tag yelb-appserver:latest ${{ secrets.DOCKER_USERNAME }}/yelb-appserver:latest
+           docker push ${{ secrets.DOCKER_USERNAME }}/yelb-appserver:latest
       # - name: Upload Build Logs
       #   uses: actions/upload-artifact@v4
       #   with:
@@ -148,14 +142,11 @@ jobs:
         run: |
           docker scout quickview yelb-db:latest
  
-      # - name: Login to Private Registry
-      #   run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
- 
-      # - name: Tag and Push to Registry
-      #   run: |
-      #     docker tag yelb-ui:latest ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
-      #     docker push ${{ secrets.REGISTRY_URL }}/yelb-ui:latest
- 
+     
+      - name: Tag and Push to Registry
+        run: |
+           docker tag yelb-db:latest ${{ secrets.DOCKER_USERNAME }}/yelb-db:latest
+           docker push ${{ secrets.DOCKER_USERNAME }}/yelb-db:latest
       # - name: Upload Build Logs
       #   uses: actions/upload-artifact@v4
       #   with:
