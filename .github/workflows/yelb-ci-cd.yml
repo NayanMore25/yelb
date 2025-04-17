@@ -55,6 +55,7 @@ jobs:
       - name: Deploy to Staging
         run: |
            echo "Deploying to staging..."
+           docker stop yelb-ui  || true
            docker rm yelb-ui  || true
            docker run -d --network yelb-network --name yelb-ui -p 80:80 ${{ secrets.DOCKER_USERNAME }}/yelb-ui:latest
            
