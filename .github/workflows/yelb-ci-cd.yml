@@ -54,7 +54,8 @@ jobs:
  
       - name: Deploy to Staging
         run: |
-           echo "Deploying to staging..." 
+           echo "Deploying to staging..."
+           docker rm yelb-ui  || true
            docker run -d --network yelb-network --name yelb-ui -p 80:80 ${{ secrets.DOCKER_USERNAME }}/yelb-ui:latest
            
       #     # Example: kubectl apply -f staging/deployment.yaml
