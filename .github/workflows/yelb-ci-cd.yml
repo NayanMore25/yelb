@@ -65,7 +65,7 @@ jobs:
            else
             echo "No existing container named $CONTAINER_NAME. Skipping removal."
            fi
-           docker run -d --name yelb-ui -p 8083:80 yelb-ui-image
+           docker run -d --name yelb-ui -p 8083:80 yelb-ui:latest
         #docker stop yelb-ui  || true
         #docker rm yelb-ui  || true
          #docker run -d --network yelb-network --name yelb-ui -p 8083:80 ${{ secrets.DOCKER_USERNAME }}/yelb-ui:latest
