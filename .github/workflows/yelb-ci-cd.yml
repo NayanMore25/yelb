@@ -128,6 +128,22 @@ jobs:
       #   with:
       #     name: build-logs
       #     path: /tmp/build-logs-appserver.txt
+      - name: Deploy to Staging
+        run: |
+           echo "Deploying to staging..."
+           CONTAINER_NAME=yelb-appserver
+
+           echo "Checking if container $CONTAINER_NAME exists..."
+           if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+            echo "Stopping and removing container: $CONTAINER_NAME"
+            docker stop $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME || true
+           else
+            echo "No existing container named $CONTAINER_NAME. Skipping removal."
+           fi
+           docker run -d --network yelb-network --name yelb-appserver -p 8083:80 ${{ secrets.DOCKER_USERNAME }}/yelb-appserver:latest
+
+
 
 
   build_db:
