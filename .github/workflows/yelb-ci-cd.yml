@@ -10,6 +10,7 @@ on:
 jobs:
   build_ui:
     runs-on: self-hosted
+    needs: [build_appserver]
  
     steps:
       - name: Checkout code
@@ -146,6 +147,7 @@ jobs:
 
   redis-server:
     runs-on: self-hosted
+    needs: [build_ui]
  
     steps:
       - name: Checkout code
@@ -170,6 +172,7 @@ jobs:
 
   build_db:
     runs-on: self-hosted
+    needs: [redis-server]
  
     steps:
       - name: Checkout code
