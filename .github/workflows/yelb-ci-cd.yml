@@ -141,7 +141,7 @@ jobs:
            else
             echo "No existing container named $CONTAINER_NAME. Skipping removal."
            fi
-           docker run -d --network yelb-network --name yelb-appserver -p 8083:80 ${{ secrets.DOCKER_USERNAME }}/yelb-appserver:latest
+           docker run -d --network yelb-network --name yelb-appserver -p 4567:4567 ${{ secrets.DOCKER_USERNAME }}/yelb-appserver:latest
 
 
 
