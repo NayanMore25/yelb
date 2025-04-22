@@ -224,23 +224,25 @@ jobs:
            fi
            docker run -d --network yelb-network --name yelb-db -p 5432:5432 ${{ secrets.DOCKER_USERNAME }}/yelb-db:latest
 
-    Slack-integration:
-      runs-on: self-hosted
+
+  Slack-Integration:
+       runs-on: self-hosted
+       needs: [build_db]
+      
+       steps:
+         - name: Checkout code
+           uses: actions/checkout@v3     
  
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v3     
+         - name: Notify Slack on success
+           if: success()
+           run: |
+             curl -X POST -H 'Content-type: application/json' \
+             --data '{"text":"Build succeeded on GitHub Actions!"}' \
+             ${{ secrets.SLACK_WEBHOOK_URL }}
  
-      - name: Notify Slack on success
-        if: success()
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"Build succeeded on GitHub Actions!"}' \
-          ${{ secrets.SLACK_WEBHOOK_URL }}
- 
-      - name: Notify Slack on failure
-        if: failure()
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"Build failed on GitHub Actions."}' \
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+         - name: Notify Slack on failure
+           if: failure()
+           run: |
+             curl -X POST -H 'Content-type: application/json' \
+             --data '{"text":"Build failed on GitHub Actions."}' \
+             { secrets.SLACK_WEBHOOK_URL }}
