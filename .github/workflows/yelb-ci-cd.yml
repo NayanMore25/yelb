@@ -10,7 +10,7 @@ on:
 jobs:
   build_ui:
     runs-on: self-hosted
-    needs: [build_appserver]
+   # needs: [build_appserver]
  
     steps:
       - name: Checkout code
@@ -33,9 +33,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           
       - name: Docker Scout Scan
-        #uses: docker/scout-action@v1
-        #with:
-         #image: yelb-ui:latest
         run: |
           docker scout quickview yelb-ui:latest
         
@@ -67,29 +64,16 @@ jobs:
             echo "No existing container named $CONTAINER_NAME. Skipping removal."
            fi
            docker run -d --network yelb-network --name yelb-ui -p 8083:80 ${{ secrets.DOCKER_USERNAME }}/yelb-ui:latest
-        #docker run -d --name yelb-ui -p 8083:80 yelb-ui:latest
-        #docker stop yelb-ui  || true
-        #docker rm yelb-ui  || true
-         #docker run -d --network yelb-network --name yelb-ui -p 8083:80 ${{ secrets.DOCKER_USERNAME }}/yelb-ui:latest
-           
-      #     # Example: kubectl apply -f staging/deployment.yaml
+        
  
-      # - name: Run Tests in Staging
-      #   run: echo "Tests passed in staging"
- 
+   
       # - name: Deploy to Production
       #   if: success()
       #   run: |
       #     echo "Deploying to production..."
       #     # Example: kubectl apply -f prod/deployment.yaml
  
-      # - name: Slack Notification
-      #   uses: 8398a7/action-slack@v3
-      #   with:
-      #     status: ${{ job.status }}
-      #     fields: repo,commit,author
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+     
   build_appserver:
     runs-on: self-hosted
  
@@ -147,7 +131,7 @@ jobs:
 
   redis-server:
     runs-on: self-hosted
-    needs: [build_ui]
+  #  needs: [build_ui]
  
     steps:
       - name: Checkout code
@@ -172,7 +156,7 @@ jobs:
 
   build_db:
     runs-on: self-hosted
-    needs: [redis-server]
+   # needs: [redis-server]
  
     steps:
       - name: Checkout code
@@ -227,7 +211,7 @@ jobs:
 
   Slack-Integration:
        runs-on: self-hosted
-       needs: [build_db]
+      # needs: [build_db]
       
        steps:
          - name: Checkout code
