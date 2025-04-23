@@ -222,7 +222,7 @@ jobs:
            else
             echo "No existing container named $CONTAINER_NAME. Skipping removal."
            fi
-           docker run -d --network yelb-network --name yelb-db -p 5432:5432 ${{ secrets.DOCKER_USERNAME }}/yelb-db:latest
+       # docker run -d --network yelb-network --name yelb-db -p 5432:5432 ${{ secrets.DOCKER_USERNAME }}/yelb-db:latest
 
 
   Slack-Integration:
